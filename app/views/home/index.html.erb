@@ -1,0 +1,92 @@
+<div class="container">
+<h1>Calculator</h1>
+
+<form method="get">
+  <input type="text" name="expression" id="display" value="<%= params[:expression] %>" readonly>
+
+  <br><br>
+
+  <% buttons = [
+    "7","8","9","/",
+    "4","5","6","*",
+    "1","2","3","-",
+    "0",".","=","+"
+  ] %>
+
+  <% buttons.each do |btn| %>
+    <% if btn == "=" %>
+      <button type="submit"><%= btn %></button>
+    <% else %>
+      <button type="button" onclick="add('<%= btn %>')"><%= btn %></button>
+    <% end %>
+  <% end %>
+
+  <button type="button" onclick="clearDisplay()">C</button>
+</form>
+
+<h2>Result: <%= @result %></h2>
+
+<script>
+function add(val) {
+  document.getElementById("display").value += val;
+}
+
+function clearDisplay() {
+  document.getElementById("display").value = "";
+}
+</script>
+</div>
+<div class="contaier">
+<h1> Unit Converter </h1>
+
+  <form method="get">
+    <input type="number" name="value" placeholder="Enter Value">
+	
+	<select name="type">
+	  <option value="km_to_m">KM to Meter</option>
+	  <option value="m_to_km">Meter to KM</option>
+	  <option value="kg_to_g">KG to Grams</option>
+	  <option value="g_to_kg">Grams to KG</option>
+	  <option value="mm_to_inch">MM to Inch</option>
+	  <option value="mm_to_cm">MM to CM</option>
+	  <option value="cm_to_mm">CM to MM</option>
+
+	 </select>
+	
+	<input type="submit" value="convert">
+   </form>
+     
+   <% if @converted %>
+     
+     <h2>Converted Value: <%= @converted %></h2>
+   <% end %>	 
+   </div>
+   <div class="contaier contaier-body" border="black">
+<h1>Currency Converter</h1>
+
+<form method="get">
+  <input type="number" name="amount" placeholder="Enter amount">
+
+  <select name="from">
+    <option value="USD">USD</option>
+    <option value="INR">INR</option>
+    <option value="EUR">EUR</option>
+    <option value="KWD">KWD</option>
+    <option value="AED">AED</option>
+  </select>
+
+  <select name="to">
+    <option value="INR">INR</option>
+    <option value="USD">USD</option>
+    <option value="EUR">EUR</option>
+    <option value="KWD">KWD</option>
+    <option value="AED">AED</option>
+  </select>
+
+  <input type="submit" value="Convert">
+</form>
+	
+<% if @currency_result %>
+  <h2>Converted Amount: <%= @currency_result %></h2>
+<% end %>
+</div>

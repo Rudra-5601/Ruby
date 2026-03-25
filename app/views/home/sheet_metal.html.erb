@@ -1,0 +1,96 @@
+<h1>Sheet Metal Calculator</h1>
+
+<form method="get">
+
+  Shape:
+  <select name="shape" onchange="showFields(this.value)">
+    <option value="plate">Plate</option>
+    <option value="circle">Circle</option>
+    <option value="ring">Ring</option>
+  </select><br><br>
+
+  <div id="plate">
+    Length (mm): <input type="number" name="length"><br>
+    Width (mm): <input type="number" name="width"><br>
+  </div>
+
+  <div id="circle" style="display:none;">
+    Diameter (mm): <input type="number" name="diameter"><br>
+  </div>
+
+  <div id="ring" style="display:none;">
+    Outer Diameter (mm): <input type="number" name="outer_diameter"><br>
+    Inner Diameter (mm): <input type="number" name="inner_diameter"><br>
+  </div>
+
+  <br>
+  Thickness (mm): <input type="number" name="thickness" step="0.1" ><br><br>
+
+  Density:
+  <select name="density">
+    <option value="7850">Steel</option>
+    <option value="2700">Aluminum</option>
+    <option value="8900">Copper</option>
+  </select><br><br>
+
+  <input type="submit" value="Calculate">
+</form>
+
+<% if @weight %>
+  <h2>Weight: <%= @weight.round(6) %> kg</h2>
+<% end %>
+
+<script>
+function showFields(shape) {
+  document.getElementById("plate").style.display = "none";
+  document.getElementById("circle").style.display = "none";
+  document.getElementById("ring").style.display = "none";
+
+  document.getElementById(shape).style.display = "block";
+}
+</script>
+
+<h2>Bend Allowance Calculator</h2>
+
+<form method="get">
+  Angle (deg): <input type="number" name="angle" step="0.1"><br><br>
+  Radius (mm): <input type="number" name="radius" step="0.1"><br><br>
+  Thickness (mm): <input type="number" name="thickness" step="0.01"><br><br>
+
+  K-Factor:
+  <select name="k_factor">
+    <option value="0.3">0.3 (Air Bending)</option>
+    <option value="0.4">0.4 (Typical)</option>
+    <option value="0.5">0.5 (Bottoming)</option>
+  </select><br><br>
+
+  <input type="submit" value="Calculate BA">
+</form>
+
+<% if @bend_allowance %>
+  <h3>Bend Allowance: <%= @bend_allowance.round(2) %> mm</h3>
+<% end %>
+<h2>Multi-Bend Flat Pattern</h2>
+
+<form method="get">
+  Straight Lengths (comma):
+  <input type="text" name="lengths" placeholder="100,80,50"><br><br>
+
+  Bend Angles (comma):
+  <input type="text" name="angles" placeholder="90,90"><br><br>
+
+  Radius (mm):
+  <input type="number" name="radius" step="0.1"><br><br>
+
+  Thickness (mm):
+  <input type="number" name="thickness" step="0.01"><br><br>
+
+  K-factor:
+  <input type="number" name="k_factor" step="0.01" value="0.4"><br><br>
+
+  <input type="submit" value="Calculate Flat Length">
+</form>
+
+<% if @flat_length %>
+  <h3>Flat Length: <%= @flat_length.round(2) %> mm</h3>
+<% end %>
